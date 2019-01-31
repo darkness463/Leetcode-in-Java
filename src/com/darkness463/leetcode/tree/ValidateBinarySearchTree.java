@@ -39,22 +39,32 @@ public class ValidateBinarySearchTree {
             return true;
         }
 
-        return check(root, root.val);
+        return check(root, null, null);
     }
 
-    private boolean check(TreeNode root, int last) {
+    private boolean check(TreeNode root, Integer max, Integer min) {
         if (root == null) {
             return true;
         }
-
-        if (check(root.left, last)) {
-            if (root.val < last) {
-                return false;
-            }
-            last = root.val;
-            return check(root.right, last);
+        if (min != null && root.val <= min) {
+            return false;
         }
-        return false;
+
+        if (max != null && root.val >= max) {
+            return false;
+        }
+
+        return check(root.left, root.val, min) && check(root.right, max, root.val);
+    }
+
+    public static void main(String[] args) {
+        // [2, 1, 3]
+        TreeNode p = new TreeNode(2);
+        TreeNode l = new TreeNode(1);
+        TreeNode r = new TreeNode(3);
+        p.left = l;
+        p.right = r;
+        System.out.println(new ValidateBinarySearchTree().isValidBST(p));
     }
 
 }

@@ -32,7 +32,24 @@ import com.darkness463.leetcode.TreeNode;
 public class LowestCommonAncestorOfABT {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return null;
+        if (root == null) {
+            return null;
+        }
+        if (root == p || root == q) {
+            return root;
+        }
+
+        TreeNode findL = lowestCommonAncestor(root.left, p, q);
+        TreeNode findR = lowestCommonAncestor(root.right, p, q);
+        if (findL != null && findR != null) {
+            return root;
+        } else if (findL != null && findR == null) {
+            return findL;
+        } else if (findL == null && findR != null) {
+            return findR;
+        } else {
+            return null;
+        }
     }
 
 }
